@@ -1,70 +1,72 @@
 services:
   db:
-    container_name: ""
-    env_file: "db.env"
-    hostname: ""
-    image: ""
+    container_name: ''
+    env_file: db.env
+    hostname: ''
+    image: ''
     logging:
-      driver: "json-file"
+      driver: json-file
       options:
-        max-file: "5"
-        max-size: "5m"
+        max-file: 5
+        max-size: 5m
     networks:
-        app-net:
-          ipv4_address: ""
-    restart: "always"
-    stop_grace_period: "10s"
+      app-net:
+        ipv4_address: ''
+    restart: always
+    stop_grace_period: 10s
     volumes:
       # Permissions for this folder:
-      - "./db-persistence:"
+      - ./db-persistence:/var/lib/mysql # MySQL, MariaDB
+      - ./db-persistence:/var/lib/postgresql/data # PostgreSQL
+      - ./db-persistence:/data/db # MongoDB
 
   app:
-    container_name: ""
+    container_name: traefik
     depends_on:
-      - "db"
+      - db
     dns:
-      - "1.1.1.1"
-      - "1.0.0.1"
-    env_file: "app.env"
-    hostname: ""
-    image: ""
+      - 1.1.1.1
+      - 1.0.0.1
+    env_file: app.env
+    hostname: traefik
+    image: ''
     labels:
       - "traefik.enable=true"
       # Routers
       - "traefik.http.routers.app.rule=Host(`app.${DOMAIN_NAME}`)"
-      - "traefik.http.routers.app.tls=true"
-      - "traefik.http.routers.app.tls.certresolver=letsencrypt"
       - "traefik.http.routers.app.tls.domains[0].main=app.${DOMAIN_NAME}"
+      - "traefik.http.routers.app.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.app.tls=true"
       - "traefik.http.routers.app.service=app"
       # Services
       - "traefik.http.services.app.loadbalancer.server.port=80"
     logging:
-      driver: "json-file"
+      driver: json-file
       options:
-        max-file: "5"
-        max-size: "10m"
+        max-file: 5
+        max-size: 10m
     networks:
         app-net:
-          ipv4_address: ""
+          ipv4_address: ''
         traefik-net:
-          ipv4_address: ""
+          ipv4_address: ''
     ports:
-      - "80"
-    restart: "always"
-    stop_grace_period: "10s"
+      - 80
+    restart: always
+    stop_grace_period: 10s
     volumes:
       # Permissions for this folder:
-      - "./app-persistence"
+      - ./app-persistence
 
 networks:
   app-net:
-    name: "app-internal"
-    driver: "bridge"
+    name: app-internal
+    driver: bridge
     ipam:
-      driver: "default"
+      driver: default
       config:
-        - subnet: ""
-          gateway: ""
+        - subnet: ''
+          gateway: ''
   traefik-net:
-    external: "true"
-    name: "traefik-net"
+    external: true
+    name: traefik-net
