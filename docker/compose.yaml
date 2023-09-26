@@ -1,9 +1,9 @@
 services:
   db:
-    container_name: ''
+    container_name:
     env_file: db.env
-    hostname: ''
-    image: ''
+    hostname:
+    image:
     logging:
       driver: json-file
       options:
@@ -11,7 +11,7 @@ services:
         max-size: 5m
     networks:
       app-net:
-        ipv4_address: ''
+        ipv4_address:
     restart: always
     stop_grace_period: 10s
     volumes:
@@ -29,7 +29,7 @@ services:
       - 1.0.0.1
     env_file: app.env
     hostname: traefik
-    image: ''
+    image:
     labels:
       - "traefik.enable=true"
       # Routers
@@ -47,9 +47,9 @@ services:
         max-size: 10m
     networks:
         app-net:
-          ipv4_address: ''
+          ipv4_address:
         traefik-net:
-          ipv4_address: ''
+          ipv4_address:
     ports:
       - 80
     restart: always
@@ -65,8 +65,8 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: ''
-          gateway: ''
+        - subnet:
+          gateway:
   traefik-net:
     external: true
     name: traefik-net
