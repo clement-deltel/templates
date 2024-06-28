@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Module
-"""
+"""Module to interact with"""
 
 # Generic/Built-in modules
 
@@ -10,6 +9,9 @@
 # Owned modules
 
 
-class Class():
-    """Class
-    """
+class MyClass:
+    """Class specifying attributes and methods related to"""
+
+    def my_function(self):
+        """."""
+        print("Hello World")
