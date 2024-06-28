@@ -1,3 +1,4 @@
+# Commitizen and pre-commit
 argcomplete==3.3.0
 cfgv==3.4.0
 charset-normalizer==3.3.2
