@@ -2,57 +2,64 @@
 # See https://pre-commit.com/hooks.html for more hooks
 
 repos:
-- repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v3.2.0
-  hooks:
-  # Prevents giant files from being committed.
-  - id: check-added-large-files
-  # Checks json files for parseable syntax.
-  - id: check-json
-  # Checks for files that contain merge conflict strings.
-  - id: check-merge-conflict
-  # Checks yaml files for parseable syntax.
-  - id: check-yaml
-  # Detects *your* aws credentials from the aws cli credentials file.
-  - id: detect-aws-credentials
-  # Detects the presence of private keys.
-  - id: detect-private-key
-  # Ensures that a file is either empty, or ends with one newline.
-  - id: end-of-file-fixer
-  # Adds # -*- coding: utf-8 -*- to the top of python files.
-  - id: fix-encoding-pragma
-  # Sorts entries in requirements.txt.
-  - id: requirements-txt-fixer
-  # Sorts simple yaml files which consist only of top-level keys, preserving comments and blocks.
-  - id: sort-simple-yaml
-  # Trims trailing whitespace.
-  - id: trailing-whitespace
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+    # Prevents giant files from being committed.
+    - id: check-added-large-files
+    # Checks json files for parseable syntax.
+    - id: check-json
+    # Checks for files that contain merge conflict strings.
+    - id: check-merge-conflict
+    # Checks yaml files for parseable syntax.
+    - id: check-yaml
+    # Detects *your* aws credentials from the aws cli credentials file.
+    - id: detect-aws-credentials
+    # Detects the presence of private keys.
+    - id: detect-private-key
+    # Ensures that a file is either empty, or ends with one newline.
+    - id: end-of-file-fixer
+    # Adds # -*- coding: utf-8 -*- to the top of python files.
+    - id: fix-encoding-pragma
+    # Sorts entries in requirements.txt.
+    - id: requirements-txt-fixer
+    # Sorts simple yaml files which consist only of top-level keys, preserving comments and blocks.
+    - id: sort-simple-yaml
+    # Trims trailing whitespace.
+    - id: trailing-whitespace
 
-- repo: https://github.com/FalconSocial/pre-commit-python-sorter
-  sha: 1.0.4
-  hooks:
-  # Sorts python imports.
-  - id: python-import-sorter
-    args: ['--silent-overwrite']
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: master
+    hooks:
+      - id: commitizen
+      - id: commitizen-branch
+        stages: [push]
 
-- repo: https://github.com/ansible/ansible-lint
-  rev: v6.14.2
-  hooks:
-  # Runs ansible-lint.
-  - id: ansible-lint
+  - repo: https://github.com/FalconSocial/pre-commit-python-sorter
+    sha: 1.0.4
+    hooks:
+    # Sorts python imports.
+    - id: python-import-sorter
+      args: ['--silent-overwrite']
 
-- repo: https://github.com/IamTheFij/docker-pre-commit
-  rev: v2.1.1
-  hooks:
-  - id: docker-compose-check
+  - repo: https://github.com/ansible/ansible-lint
+    rev: v6.14.2
+    hooks:
+    # Runs ansible-lint.
+    - id: ansible-lint
 
-- repo: https://gitlab.com/pycqa/flake8
-  rev: 39ceae7491f4121902a5dccc22657a0675c95539
-  hooks:
-  - id: flake8
+  - repo: https://github.com/IamTheFij/docker-pre-commit
+    rev: v2.1.1
+    hooks:
+    - id: docker-compose-check
 
-- repo: https://gitlab.com/smop/pre-commit-hooks
-  rev: v1.0.0
-  hooks:
-  # Validates .gitlab-ci.yml file.
-  - id: check-gitlab-ci
+  - repo: https://gitlab.com/pycqa/flake8
+    rev: 39ceae7491f4121902a5dccc22657a0675c95539
+    hooks:
+    - id: flake8
+
+  - repo: https://gitlab.com/smop/pre-commit-hooks
+    rev: v1.0.0
+    hooks:
+    # Validates .gitlab-ci.yml file.
+    - id: check-gitlab-ci
