@@ -5,18 +5,19 @@ LABEL org.opencontainers.image.title=""
 LABEL org.opencontainers.image.description=""
 LABEL com.mycorp.myteam....=""
 
-ARG APP_NAME=application
+# Not persisted into the built image
+ARG APP_NAME="application"
+ARG HOME=
+ARG USER="app"
 ARG USER_ID="1001"
-ARG GROUP_ID="app"
-ARG COMMENT="App"
-ARG HOME="/app"
 
-ENV APP_NAME=${APP_NAME}
-ENV HOME=${HOME}
+# Persisted into the built image
+ENV HOME="/home/app"
+ENV PATH
 
 # Following instructions create a layer: ADD, COPY, RUN
-RUN groupadd --gid ${USER_ID} ${GROUP_ID} && \
-    useradd --create-home --home /app ${GROUP_ID} --uid ${USER_ID} --gid ${GROUP_ID} --comment ${COMMENT}
+RUN groupadd --gid ${USER_ID} ${USER} && \
+    useradd --create-home --home ${HOME} --uid ${USER_ID} --gid ${USER_ID} --comment ${APP_NAME} ${USER}
 #--shell /bin/bash
 
 # List packages here
@@ -28,14 +29,9 @@ RUN apt-get update -y && \
 WORKDIR ${HOME}
 
 #ADD only to add files from an URL or tar file
-COPY app/ ${HOME}/${APP_NAME}
-ENV PATH $PATH:${HOME}/${APP_NAME}/bin
+COPY --chown=app src ./src
 
-# Drop root and change ownership of the application folder to the user
-#RUN chown -R ${USER_ID}:${GROUP_ID} ${HOME}
-# App user only needs execution permissions on the file, not ownership
-RUN chmod +x ${HOME}/app.sh
-USER ${USER_ID}
+USER ${USER}
 
 # Default and cannot be overridden
 ENTRYPOINT ["/docker-entrypoint.sh"]
