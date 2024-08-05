@@ -13,14 +13,12 @@
 **/*.pdf
 
 # Docker
-compose.yaml
+# compose.yaml
 docker/
-Dockerfile
+# Dockerfile
 
 # Git
 .git*
-# .gitattributes
-# .gitignore
 
 # Markdown
 **/*.md
@@ -28,10 +26,8 @@ Dockerfile
 # LICENSE.md
 # README.md
 
-#==============================================================================#
-#               ------- Visual Studio Code ------                              #
-#==============================================================================#
-.vscode
+# Visual Studio Code
+.vscode*
 
 #==============================================================================#
 #               ------- Python ------                                          #
