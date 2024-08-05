@@ -19,6 +19,7 @@ docker/
 
 # Git
 .git*
+.pre-commit*
 
 # Markdown
 **/*.md
