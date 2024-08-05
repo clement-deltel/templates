@@ -28,6 +28,9 @@ docker/
 # LICENSE.md
 # README.md
 
+# Tests
+test*
+
 # Visual Studio Code
 .vscode*
 
